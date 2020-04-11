@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+    <!--这个配置项需要用到这个类去处理-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!--针对info和error输出不同的文件-->
+    <appender name="fileInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--只拦截-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--表示如果有ERROR就拒绝，其他就接受。也是根据默认级别（INFO）以上为判断还有一个“中立的参数”，直接忽略这段拦截-->
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+           <!-- <fileNamePattern>C:\Users\ASUS\Desktop\logger\doc\info.%d.log</fileNamePattern>-->
+            <!--阿里云存放日志地点-->
+            <fileNamePattern>/usr/java/sell/logo/info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--针对info和error输出不同的文件-->
+    <appender name="fileError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--根据范围来过滤,只接受这个及以上级别的日志；这个只能用于ERROR，因为ERROR为最高级别的-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--本地路径-->
+            <!--<fileNamePattern>C:\Users\ASUS\Desktop\logger\doc\error.%d.log</fileNamePattern>-->
+            <!--阿里云存放日志地点-->
+            <fileNamePattern>/usr/java/sell/logo/error.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="consoleLog" />
+        <appender-ref ref="fileInfo" />
+        <appender-ref ref="fileError" />
+    </root>
+
+</configuration>

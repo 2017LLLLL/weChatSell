@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 15296552412
+    url: jdbc:mysql://112.74.186.128/sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+
+wechat:
+  # 公众账号, 授权
+  mpAppId: wxd898fcb01713c658
+  mpAppSecret:
+server:
+  port: 8089
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
